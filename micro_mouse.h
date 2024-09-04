@@ -3,6 +3,12 @@
 
 #define MAP_SIZE 16
 
+enum MM_LEVEL {
+    MM_INFO,
+    MM_BUG,
+    MM_ERROR
+};
+
 class cell_t {
     public:
         int x,y;
@@ -30,5 +36,6 @@ class mouse {
 };
 
 void init_map_diem();
-void in_map_diem();
-void in_map_vc();
+void in_map_diem(int x, int y);
+void in_map_vc(int map_vc[MAP_SIZE][MAP_SIZE]);
+void MM_LOGD(const char *string);

@@ -1,27 +1,18 @@
 #include "micro_mouse.h"
 
+MM_LEVEL MM_L = MM_INFO;
+
+#define TAG_DEBUG MM_L
+
 int map_diem[MAP_SIZE][MAP_SIZE] = {0};
 
-int map_vc[MAP_SIZE][MAP_SIZE] = {
-    {4,4,4,4,4,4,4,4,4,4,4,7,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,4,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,7,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
+void MM_LOGD(const char *string) {
+    if(TAG_DEBUG == MM_BUG){
+        std::cout << string << std::endl;
+    }
+}
 
-void in_map_vc(){
+void in_map_vc(int map_vc[MAP_SIZE][MAP_SIZE]){
     for (int i = 0; i < MAP_SIZE; i++)
     {
         for (int j = 0; j < MAP_SIZE; j++)
@@ -57,13 +48,13 @@ void in_map_vc(){
     }
 }
 
-void in_map_diem()
+void in_map_diem(int x, int y)
 {
     for (int i = 0; i < MAP_SIZE; i++)
     {
         for (int j = 0; j < MAP_SIZE; j++)
         {
-            // if(map_diem[i]==cell_local[i]&&map_diem[j]==cell_local[j]) printf("*");
+            if(i == x && j == y) {printf(".");}
             std::cout << std::setw(3) << map_diem[i][j];
 
         }
@@ -94,7 +85,7 @@ void cell_t::update(int idx, int idy) {
     this->y += idy;
 }
 
-mouse::mouse(cell_t local) : local(local), front(cell_t(0,1)), back(cell_t(-1,0)), right(cell_t(1,0)), left(cell_t(-1,0)) {
+mouse::mouse(cell_t local) : local(local), front(cell_t(0,1)), back(cell_t(0,-1)), right(cell_t(1,0)), left(cell_t(-1,0)) {
     this->huong_current = dong;
     this->s_sensor = 0b000;
 }
